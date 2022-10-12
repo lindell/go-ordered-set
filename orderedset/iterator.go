@@ -26,3 +26,5 @@ func (i *Iterator[T]) Next() (val T, ok bool) {
 
 	return current.value, true
 }
+
+type test struct{}

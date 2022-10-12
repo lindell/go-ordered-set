@@ -50,6 +50,7 @@ func TestAddValuesAgain(t *testing.T) {
 	set.Add("C")
 	set.Add("B")
 	set.Add("A")
+	set.AddFirst("A")
 
 	checkValues(t, set, []string{"B", "D", "C", "A"})
 }

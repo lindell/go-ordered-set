@@ -55,7 +55,7 @@ func TestAddValuesAgain(t *testing.T) {
 	checkValues(t, set, []string{"B", "D", "C", "A"})
 }
 
-func checkValues[T comparable](t *testing.T, set orderedset.OrderedSet[T], values []T) {
+func checkValues[T comparable](t *testing.T, set *orderedset.OrderedSet[T], values []T) {
 	t.Helper()
 
 	// Make sure Values return correctly

@@ -9,13 +9,13 @@ type OrderedSet[T comparable] struct {
 }
 
 // New creates a new ordered set.
-func New[T comparable]() OrderedSet[T] {
+func New[T comparable]() *OrderedSet[T] {
 	first := &listElement[T]{}
 	last := &listElement[T]{}
 	first.next = last
 	last.prev = first
 
-	return OrderedSet[T]{
+	return &OrderedSet[T]{
 		lookup: map[T]*listElement[T]{},
 
 		first: first,

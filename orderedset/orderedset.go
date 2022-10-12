@@ -83,6 +83,15 @@ func (os *OrderedSet[T]) Iter() Iterator[T] {
 	}
 }
 
+// IterReverse returns an iterator that can be used to iterate over all values from the end to the beginning.
+// Consistent iteration is not guaranteed if the set is changes during iteration.
+func (os *OrderedSet[T]) IterReverse() Iterator[T] {
+	return Iterator[T]{
+		reversed: true,
+		current:  os.last.prev,
+	}
+}
+
 // Values returns all values of the set in the correct order.
 func (os *OrderedSet[T]) Values() []T {
 	values := make([]T, len(os.lookup))

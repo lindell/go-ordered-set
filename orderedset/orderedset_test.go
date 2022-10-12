@@ -71,4 +71,22 @@ func checkValues[T comparable](t *testing.T, set orderedset.OrderedSet[T], value
 	if !reflect.DeepEqual(result, values) {
 		t.Errorf("values from Values() should be %v, was %v", values, result)
 	}
+
+	// Verify the values returned by reverse iterate by appending to a slice and then compare
+	reverseResult := []T{}
+	reverseIterator := set.IterReverse()
+	for val, ok := reverseIterator.Next(); ok; val, ok = reverseIterator.Next() {
+		reverseResult = append(reverseResult, val)
+	}
+	if !reflect.DeepEqual(reverseResult, reverse(values)) {
+		t.Errorf("values from Values() should be %v, was %v", reverse(values), reverseResult)
+	}
+}
+
+func reverse[T any](s []T) []T {
+	ret := make([]T, len(s))
+	for i, j := 0, len(s)-1; i < len(s); i, j = i+1, j-1 {
+		ret[i] = s[j]
+	}
+	return ret
 }

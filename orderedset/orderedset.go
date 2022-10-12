@@ -77,16 +77,16 @@ func (os *OrderedSet[T]) Size() int {
 
 // Iter returns an iterator that can be used to iterate over all values.
 // Consistent iteration is not guaranteed if the set is changes during iteration.
-func (os *OrderedSet[T]) Iter() Iterator[T] {
-	return Iterator[T]{
+func (os *OrderedSet[T]) Iter() *Iterator[T] {
+	return &Iterator[T]{
 		current: os.first.next,
 	}
 }
 
 // IterReverse returns an iterator that can be used to iterate over all values from the end to the beginning.
 // Consistent iteration is not guaranteed if the set is changes during iteration.
-func (os *OrderedSet[T]) IterReverse() Iterator[T] {
-	return Iterator[T]{
+func (os *OrderedSet[T]) IterReverse() *Iterator[T] {
+	return &Iterator[T]{
 		reversed: true,
 		current:  os.last.prev,
 	}

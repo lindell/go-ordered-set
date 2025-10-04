@@ -1,5 +1,7 @@
 package orderedset
 
+import "iter"
+
 // OrderedSet is a set where the order of elements does kept.
 type OrderedSet[T comparable] struct {
 	lookup map[T]*listElement[T]
@@ -77,18 +79,46 @@ func (os *OrderedSet[T]) Size() int {
 
 // Iter returns an iterator that can be used to iterate over all values.
 // Consistent iteration is not guaranteed if the set is changes during iteration.
+//
+// Deprecated: Please use All() instead.
 func (os *OrderedSet[T]) Iter() *Iterator[T] {
 	return &Iterator[T]{
 		current: os.first.next,
 	}
 }
 
+// All returns an iterator that can be used to iterate over all values.
+// Consistent iteration is not guaranteed if the set is changes during iteration.
+func (os *OrderedSet[T]) All() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for current := os.first.next; current != os.last; current = current.next {
+			if !yield(current.value) {
+				return
+			}
+		}
+	}
+}
+
 // IterReverse returns an iterator that can be used to iterate over all values from the end to the beginning.
 // Consistent iteration is not guaranteed if the set is changes during iteration.
+//
+// Deprecated: Please use Backwards() instead.
 func (os *OrderedSet[T]) IterReverse() *Iterator[T] {
 	return &Iterator[T]{
 		reversed: true,
 		current:  os.last.prev,
+	}
+}
+
+// Backwards returns an iterator that can be used to iterate over all values from the end to the beginning.
+// Consistent iteration is not guaranteed if the set is changes during iteration.
+func (os *OrderedSet[T]) Backwards() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for current := os.last.prev; current != os.first; current = current.prev {
+			if !yield(current.value) {
+				return
+			}
+		}
 	}
 }
 

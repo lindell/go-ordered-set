@@ -1,8 +1,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/lindell/go-ordered-set/orderedset.svg)](https://pkg.go.dev/github.com/lindell/go-ordered-set/orderedset)
 [![Coverage Status](https://coveralls.io/repos/github/lindell/go-ordered-set/badge.svg)](https://coveralls.io/github/lindell/go-ordered-set)
 
-
 # go-ordered-set
+
 Insertion ordered set for Go using generics.
 
 All operations are running in constant time (`O(1)`).
@@ -16,6 +16,7 @@ go get github.com/lindell/go-ordered-set
 ```
 
 Import:
+
 ```go
 import "github.com/lindell/go-ordered-set/orderedset"
 ```
@@ -48,8 +49,7 @@ func Example() {
 	fmt.Printf("Values: %v\n", set.Values())
 
 	fmt.Println("Iterated Values:")
-	it := set.Iter()
-	for val, ok := it.Next(); ok; val, ok = it.Next() {
+	for val := range set.All() {
 		fmt.Printf(" %v\n", val)
 	}
 

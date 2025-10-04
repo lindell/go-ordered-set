@@ -25,8 +25,7 @@ func Example() {
 	fmt.Printf("Values: %v\n", set.Values())
 
 	fmt.Println("Iterated Values:")
-	it := set.Iter()
-	for val, ok := it.Next(); ok; val, ok = it.Next() {
+	for val := range set.All() {
 		fmt.Printf(" %v\n", val)
 	}
 

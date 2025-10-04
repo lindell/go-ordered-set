@@ -2,6 +2,7 @@ package orderedset_test
 
 import (
 	"reflect"
+	"slices"
 	"testing"
 
 	"github.com/lindell/go-ordered-set/orderedset"
@@ -64,21 +65,13 @@ func checkValues[T comparable](t *testing.T, set *orderedset.OrderedSet[T], valu
 	}
 
 	// Verify the values returned by iterate by appending to a slice and then compare
-	result := []T{}
-	iterator := set.Iter()
-	for val, ok := iterator.Next(); ok; val, ok = iterator.Next() {
-		result = append(result, val)
-	}
+	result := slices.Collect(set.All())
 	if !reflect.DeepEqual(result, values) {
 		t.Errorf("values from Values() should be %v, was %v", values, result)
 	}
 
 	// Verify the values returned by reverse iterate by appending to a slice and then compare
-	reverseResult := []T{}
-	reverseIterator := set.IterReverse()
-	for val, ok := reverseIterator.Next(); ok; val, ok = reverseIterator.Next() {
-		reverseResult = append(reverseResult, val)
-	}
+	reverseResult := slices.Collect(set.Backwards())
 	if !reflect.DeepEqual(reverseResult, reverse(values)) {
 		t.Errorf("values from Values() should be %v, was %v", reverse(values), reverseResult)
 	}
